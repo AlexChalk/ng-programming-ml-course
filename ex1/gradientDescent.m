@@ -18,7 +18,7 @@ for iter = 1:num_iters
     %
 
 
-
+    theta = (theta' - (alpha * (1 / m) * sum((hypothesis(theta', X) - y)) * X(mod(iter, length(X)), :)))'
 
 
 
