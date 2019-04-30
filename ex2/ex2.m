@@ -46,7 +46,7 @@ legend('Admitted', 'Not admitted')
 hold off;
 
 fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+PLACEHOLDER = input('Press Enter: ');
 
 
 %% ============ Part 2: Compute Cost and Gradient ============
@@ -83,7 +83,7 @@ fprintf(' %f \n', grad);
 fprintf('Expected gradients (approx):\n 0.043\n 2.566\n 2.647\n');
 
 fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+PLACEHOLDER = input('Press Enter: ');
 
 
 %% ============= Part 3: Optimizing using fminunc  =============
@@ -120,7 +120,7 @@ legend('Admitted', 'Not admitted')
 hold off;
 
 fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+PLACEHOLDER = input('Press Enter: ');
 
 %% ============== Part 4: Predict and Accuracies ==============
 %  After learning the parameters, you'll like to use it to predict the outcomes
