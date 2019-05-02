@@ -20,8 +20,9 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
-J = (1 / m) * (sum(-y .* log(hypothesis(theta, X)) - (1 - y) .* log(1 - hypothesis(theta, X)))) 
-grad = (1 / m) * sum((hypothesis(theta, X)' - y) .* X)
+J = (1 / m) * sum(-y' .* log(hypothesis(theta, X)) - (1 - y)' .* log(1 - hypothesis(theta, X)) ) 
+
+grad = (1 / m) * sum((hypothesis(theta, X) - y) .* X)
 
 % multiply by a vector of the things you want the partial derivative for
 
@@ -30,6 +31,6 @@ grad = (1 / m) * sum((hypothesis(theta, X)' - y) .* X)
 end
 
 function G = hypothesis(theta, X)
-% almost certain they're all zeros when theta is vector of 0s
-  G = (1 ./ (1 + exp(X * -theta)))'
+  % predicts 0.5 when theta is a vector of 0s
+  G = (1 ./ (1 + exp(X * -theta)))
 end
