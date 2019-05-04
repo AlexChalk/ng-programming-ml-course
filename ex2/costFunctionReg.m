@@ -19,8 +19,7 @@ grad = zeros(size(theta));
 
 [basicCost, basicGrad] = costFunction(theta, X, y)
 
-% not working when theta is initialized to ones
-J = basicCost + (lambda / (2 * m)) * sum(theta .^ 2)
+J = basicCost + (lambda / (2 * m)) * sum(theta(2:end) .^ 2)
 
 % don't regularize theta0
 grad = [basicGrad(1); basicGrad(2:end)' + ((lambda / m) * theta(2:end))]
