@@ -18,7 +18,9 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 [basicCost, basicGrad] = costFunction(theta, X, y)
-J = basicCost + (lambda / 2 * m) * sum(theta .^ 2)
+
+% not working when theta is initialized to ones
+J = basicCost + (lambda / (2 * m)) * sum(theta .^ 2)
 
 % don't regularize theta0
 grad = [basicGrad(1); basicGrad(2:end)' + ((lambda / m) * theta(2:end))]
