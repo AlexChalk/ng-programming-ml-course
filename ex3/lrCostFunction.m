@@ -36,17 +36,15 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+basicCost = (1 / m) * sum((-y .* log(sigmoid(X * theta)) - (1 - y) .* log(1 - sigmoid(X * theta)))) 
 
+basicGrad = (1 / m) * sum((sigmoid(X * theta) - y) .* X)
 
+J = basicCost + (lambda / (2 * m)) * sum(theta(2:end) .^ 2)
 
-
-
-
-
-
+% don't regularize theta0
+grad = [basicGrad(1); basicGrad(2:end)' + ((lambda / m) * theta(2:end))]
 
 % =============================================================
-
-grad = grad(:);
 
 end
