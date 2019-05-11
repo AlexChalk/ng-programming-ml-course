@@ -30,9 +30,12 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+[m, mx] = max(X * all_theta', [], 2);
+p = mx;
 
 
-
+% size(all_theta) = 10   401
+% size(X) = 5000    401
 
 
 
