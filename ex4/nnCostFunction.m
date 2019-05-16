@@ -17,10 +17,10 @@ function [J grad] = nnCostFunction(nn_params, ...
 % Reshape nn_params back into the parameters Theta1 and Theta2, the weight matrices
 % for our 2 layer neural network
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
-                 hidden_layer_size, (input_layer_size + 1));
+                           hidden_layer_size, (input_layer_size + 1));
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
-                 num_labels, (hidden_layer_size + 1));
+                            num_labels, (hidden_layer_size + 1));
 
 % Setup some useful variables
 m = size(X, 1);
@@ -62,23 +62,14 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+ys = size(y, 1);
+Y = zeros(ys, num_labels);
 
+for c = 1:ys
+  Y(c, y(c)) = 1;
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+J = (1 / m) * sum(sum((-Y .* log(forwardprop(X, Theta1, Theta2)) - (1 - Y) .* log(1 - forwardprop(X, Theta1, Theta2))))) 
 
 % -------------------------------------------------------------
 
@@ -88,4 +79,18 @@ Theta2_grad = zeros(size(Theta2));
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
+end
+
+
+function g = forwardprop(X, Theta1, Theta2)
+m = size(X, 1);
+X_with_bias = [ones(m, 1) X];
+
+hidden_layer = sigmoid(X_with_bias * Theta1');
+n = size(hidden_layer, 1);
+hidden_layer_with_bias = [ones(n, 1), hidden_layer];
+
+output_layer = sigmoid(hidden_layer_with_bias * Theta2');
+
+g = output_layer;
 end
