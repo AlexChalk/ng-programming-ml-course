@@ -62,7 +62,12 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-Y = eye(num_labels)(y,:);
+ys = size(y, 1);
+Y = zeros(ys, num_labels);
+
+for c = 1:ys
+  Y(c, y(c)) = 1;
+end
 
 J = (1 / m) * sum(sum((-Y .* log(forwardprop(X, Theta1, Theta2)) - (1 - Y) .* log(1 - forwardprop(X, Theta1, Theta2))))) 
 
