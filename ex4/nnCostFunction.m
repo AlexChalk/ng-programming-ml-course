@@ -70,9 +70,8 @@ for c = 1:ys
 end
 
 basicCost = (1 / m) * sum(sum((-Y .* log(forwardprop(X, Theta1, Theta2)) - (1 - Y) .* log(1 - forwardprop(X, Theta1, Theta2)))'));
-
-% make less extreme to help with overfitting
 J = basicCost + (lambda / (2 * m)) * (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2)));
+
 
 % -------------------------------------------------------------
 
