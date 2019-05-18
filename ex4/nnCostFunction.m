@@ -72,6 +72,17 @@ end
 basicCost = (1 / m) * sum(sum((-Y .* log(forwardprop(X, Theta1, Theta2)) - (1 - Y) .* log(1 - forwardprop(X, Theta1, Theta2)))'));
 J = basicCost + (lambda / (2 * m)) * (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum(Theta2(:, 2:end) .^ 2)));
 
+[output_layer, unactivated_hidden_layer_with_bias, hidden_layer_with_bias] = forwardprop(X, Theta1, Theta2);
+output_delta = output_layer - Y;
+
+l2_delta = (output_delta * Theta2) .* sigmoidGradient(unactivated_hidden_layer_with_bias);
+l2_delta_no_bias = l2_delta(:, 2:end);
+
+% l1_delta = (output_delta * Theta2) .* sigmoidGradient(hidden_layer_with_bias);
+% l1_delta_no_bias = l1_delta(:, 2:end);
+
+Theta2_grad = Theta2_grad + ((1 / m) * (output_delta' * hidden_layer_with_bias));
+Theta1_grad = Theta1_grad + ((1 / m) * (l2_delta_no_bias' * [ones(m, 1) X]));
 
 % -------------------------------------------------------------
 
@@ -84,15 +95,16 @@ grad = [Theta1_grad(:) ; Theta2_grad(:)];
 end
 
 
-function g = forwardprop(X, Theta1, Theta2)
+function [output_layer, unactivated_hidden_layer_with_bias, hidden_layer_with_bias] = forwardprop(X, Theta1, Theta2)
 m = size(X, 1);
 X_with_bias = [ones(m, 1) X];
 
-hidden_layer = sigmoid(X_with_bias * Theta1');
+unactivated_hidden_layer = X_with_bias * Theta1';
+hidden_layer = sigmoid(unactivated_hidden_layer);
 n = size(hidden_layer, 1);
+
+unactivated_hidden_layer_with_bias = [ones(n, 1), unactivated_hidden_layer];
 hidden_layer_with_bias = [ones(n, 1), hidden_layer];
 
 output_layer = sigmoid(hidden_layer_with_bias * Theta2');
-
-g = output_layer;
 end
