@@ -78,8 +78,11 @@ output_delta = output_layer - Y;
 l2_delta = (output_delta * Theta2) .* sigmoidGradient(unactivated_hidden_layer_with_bias);
 l2_delta_no_bias = l2_delta(:, 2:end);
 
-Theta2_grad = Theta2_grad + ((1 / m) * (output_delta' * hidden_layer_with_bias));
-Theta1_grad = Theta1_grad + ((1 / m) * (l2_delta_no_bias' * [ones(m, 1) X]));
+basic_Theta2_grad = Theta2_grad + ((1 / m) * (output_delta' * hidden_layer_with_bias));
+basic_Theta1_grad = Theta1_grad + ((1 / m) * (l2_delta_no_bias' * [ones(m, 1) X]));
+
+Theta2_grad = [basic_Theta2_grad(:, 1), (basic_Theta2_grad(:, 2:end) + ((lambda / m) * Theta2(:, 2:end)))];
+Theta1_grad = [basic_Theta1_grad(:, 1), (basic_Theta1_grad(:, 2:end) + ((lambda / m) * Theta1(:, 2:end)))];
 
 % -------------------------------------------------------------
 
